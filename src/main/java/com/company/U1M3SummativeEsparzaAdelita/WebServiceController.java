@@ -44,31 +44,33 @@ public class WebServiceController {
                 "a flash of lightning."));
         // Magic Eight Ball
         magicEightList = new ArrayList<>();
-        Random rand = new Random();
-        magicEightList.add(new MagicEight("Am I going to pass school?", "Yes definitely"));
-        magicEightList.add(new MagicEight("Is it worth staying in this relationship?", "My reply is no"));
-        magicEightList.add(new MagicEight("Am I going on a hiking trip this year?", "Sign points to yes"));
-        magicEightList.add(new MagicEight("Am I mean?", "Ask again later"));
-        magicEightList.add(new MagicEight("I am smart, right?", "You know nothing"));
-        magicEightList.add(new MagicEight("Am I the best cook in the world?", "Doubt it"));
-        //int magic = magicEightList[rand.nextInt(magicEightList.size())];
+
+        magicEightList.add(new MagicEight(null, "Yes definitely"));
+        magicEightList.add(new MagicEight(null, "My reply is no"));
+        magicEightList.add(new MagicEight(null, "Sign points to yes"));
+        magicEightList.add(new MagicEight(null, "Ask again later"));
+        magicEightList.add(new MagicEight(null, "You know nothing"));
+        magicEightList.add(new MagicEight(null, "Doubt it"));
+
     }
+    Random rand = new Random();
     // Route to GET list of Quotes
     @RequestMapping(value="/quotes", method = RequestMethod.GET)
-    public List<Quote> getQuotes(){
-        return quoteList;
+    public Quote getQuotes(){
+        return quoteList.get(rand.nextInt(quoteList.size()));
     }
 
     // Route to GET list of Definitions
     @RequestMapping(value="/words", method = RequestMethod.GET)
-    public List<Word> getWords(){
-        return wordList;
+    public Word getWords(){
+
+        return wordList.get(rand.nextInt(wordList.size()));
     }
 
     // Route to POST Eight Ball answers
     @RequestMapping(value = "/magic", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public MagicEight createMagic(@RequestBody MagicEight magicEight){
-    
+    public MagicEight createMagic(@RequestBody String magicEight){
+        int magic = rand.nextInt(magicEightList.size());
+        return this.magicEightList.get(magic);
     }
 }
